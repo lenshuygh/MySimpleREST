@@ -24,19 +24,11 @@ public class CatRepository {
     @Transactional(REQUIRED)
     public Cat create(@NotNull Cat cat){
     	System.out.println("persisting cat: " + cat.toString());
-        em.persist(cat);
+        //em.persist(cat);
+    	em.merge(cat);
+    	em.flush();
         return cat;
     }
-    
-    /*
-     @Transactional(REQUIRED)
-    public Book create(@NotNull Book book){
-        book.setTitle(textUtil.sanitizeText(book.getTitle()));
-        book.setIsbn(generator.generateNumber());
-        em.persist(book);
-        return book;
-    }
-    */
     
     @Transactional(REQUIRED)
     public void delete(@NotNull Long id){

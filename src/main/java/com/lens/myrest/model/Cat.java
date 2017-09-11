@@ -19,7 +19,6 @@ public class Cat {
 
 	@Column
 	@NotNull
-	@Size(min=1,max=30)
 	private int age;
 
 	public int getAge() {

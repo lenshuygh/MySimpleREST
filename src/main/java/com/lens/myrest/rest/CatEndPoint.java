@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.constraints.Min;import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,12 +20,20 @@ import com.lens.myrest.model.Cat;
 import com.lens.myrest.repository.CatRepository;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+
 @Path("/cats")
 public class CatEndPoint {
 	
 	@Inject
 	private CatRepository catRepository;
 
+	@DELETE
+	@Path("/{id : \\d+}")
+	public Response deleteCat(@PathParam("id") Long id) {
+		catRepository.delete(id);
+		return Response.noContent().build();
+	}
 	
 	@GET
 	@Produces(APPLICATION_JSON)
@@ -40,12 +49,6 @@ public class CatEndPoint {
 	@GET
     @Path("/{id : \\d+}")
     @Produces(APPLICATION_JSON)
-    /*@ApiOperation(value = "Returns a book given an id",response = Book.class)
-    @ApiResponses({
-            @ApiResponse(code=200,message = "Book found"),
-            @ApiResponse(code=400,message = "Invalid id"),
-            @ApiResponse(code=404,message = "Book not found")
-    })*/
     public Response getCat(@PathParam("id") @Min(1) Long id) {
         Cat book = catRepository.find(id);
 
@@ -78,5 +81,11 @@ public class CatEndPoint {
 		return Response.created(createURI).build();
 	}
 	 
+	@GET
+	@Path("/count")
+	public Response countCats() {
+		Long nbOfCats = catRepository.countAll();
+		return Response.ok(nbOfCats).build();
+	}
 	
 }
