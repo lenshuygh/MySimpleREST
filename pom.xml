@@ -58,7 +58,7 @@
 
 	<build>
 		<finalName>my-rest-app</finalName>
-
+		<pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -124,5 +124,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 </project>

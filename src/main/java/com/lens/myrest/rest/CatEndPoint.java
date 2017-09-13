@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.constraints.Min;import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +26,18 @@ public class CatEndPoint {
 	@Inject
 	private CatRepository catRepository;
 
+	@DELETE
+	@Path("/{id : \\d+}")
+    @Produces(APPLICATION_JSON)
+	public Response deleteCat(@PathParam("id") Long id){
+		Cat cat = catRepository.find(id);
+		
+		if(cat == null){
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		catRepository.delete(id);
+		return Response.ok(cat).build();
+	}
 	
 	@GET
 	@Produces(APPLICATION_JSON)
@@ -40,35 +53,14 @@ public class CatEndPoint {
 	@GET
     @Path("/{id : \\d+}")
     @Produces(APPLICATION_JSON)
-    /*@ApiOperation(value = "Returns a book given an id",response = Book.class)
-    @ApiResponses({
-            @ApiResponse(code=200,message = "Book found"),
-            @ApiResponse(code=400,message = "Invalid id"),
-            @ApiResponse(code=404,message = "Book not found")
-    })*/
     public Response getCat(@PathParam("id") @Min(1) Long id) {
         Cat book = catRepository.find(id);
 
         if(book == null){
-            Response.status(Response.Status.NOT_FOUND).build();
+        	return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(book).build();
     }
-	
-	
-	/*
-	 * @POST
-    @Consumes(APPLICATION_JSON)
-    @ApiOperation(value = "Creates a book given a JSon book representation")
-    @ApiResponses({
-            @ApiResponse(code=201,message = "The book is created"),
-            @ApiResponse(code=415,message = "Format is not JSon")
-    })
-    public Response createBook(@ApiParam(value = "Book to be created", required = true) Book book, @Context UriInfo uriInfo) {
-        book = bookRepository.create(book);
-        URI createdURI = uriInfo.getBaseUriBuilder().path(book.getId().toString()).build();
-        return Response.created(createdURI).build();
-    }*/
 	
 	@POST
 	@Consumes(APPLICATION_JSON)
@@ -78,5 +70,13 @@ public class CatEndPoint {
 		return Response.created(createURI).build();
 	}
 	 
+	@GET
+	@Path("/count")
+	@Produces(APPLICATION_JSON)
+	public Response countCats(){
+		Long count = catRepository.countAll();
+		return Response.ok(count, APPLICATION_JSON).build();
+		
+	}
 	
 }

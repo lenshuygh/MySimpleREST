@@ -1,4 +1,4 @@
-com\lens\myrest\rest\JAXRSConfiguration.class
-com\lens\myrest\rest\CatEndPoint.class
-com\lens\myrest\model\Cat.class
-com\lens\myrest\repository\CatRepository.class
+com/lens/myrest/rest/CatEndPoint.class
+com/lens/myrest/repository/CatRepository.class
+com/lens/myrest/model/Cat.class
+com/lens/myrest/rest/JAXRSConfiguration.class

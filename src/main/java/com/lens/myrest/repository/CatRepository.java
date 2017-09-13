@@ -23,8 +23,10 @@ public class CatRepository {
     
     @Transactional(REQUIRED)
     public Cat create(@NotNull Cat cat){
-    	System.out.println("persisting cat: " + cat.toString());
-        em.persist(cat);
+    	//System.out.println("persisting cat: " + cat.toString());
+        //em.persist(cat);
+    	em.merge(cat);
+    	em.flush();
         return cat;
     }
     
