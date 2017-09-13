@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 @Entity
 public class Cat {
 	@Id
@@ -21,7 +20,7 @@ public class Cat {
 	@Column
 	@NotNull
 	private int age;
-	
+
 	public int getAge() {
 		return age;
 	}
@@ -50,8 +49,6 @@ public class Cat {
 	public String toString() {
 		return "Cat [id=" + id + ", name=" + name + ", age=" + age + "]";
 	}
-
-	
 
 	
 }
